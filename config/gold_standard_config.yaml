@@ -1,0 +1,40 @@
+# =========================================
+# CONFIG FOR MULTI-DATASET GOLD STANDARD 
+# Supports: IDATs, signal intensities, and beta files
+# =========================================
+
+# List of input datasets. Each will be processed separately.
+datasets:
+  - name: "GSE48472"
+    input_type: "idat"                # options: "idat" or "signal_intensity"
+    idat_dir: "~/Anna/epiclock/GS_datasets_test/GSE48472/buccal"   # "/path/to/idats/GSE48472"
+    signal_file: null                 # unused here
+    array_type: "450K"
+
+  - name: "GSE166844"
+    input_type: "signal_intensity"
+    idat_dir: null
+    signal_file: "~/Anna/epiclock/GS_datasets_test/GSE166844/GSE166844_Variance_raw_Signal.csv.gz"   # "/path/to/signal.csv.gz"   # path to signal intensities in csv.gz or txt.gz format
+    samples_to_process: "~/Anna/epiclock/GS_datasets_test/GSE166844/GSE166844_samples_to_process.rds"   # optional RDS file for signal intensity input
+    array_type: "EPIC"
+
+  - name: "GSE50586"
+    input_type: "signal_intensity"
+    idat_dir: null
+    signal_file: "~/Anna/epiclock/GS_datasets_test/GSE50586/GSE50586_signal_intensities.txt.gz"   # "/path/to/signal.txt.gz"
+    samples_to_process: "~/Anna/epiclock/GS_datasets_test/GSE50586/GSE50586_samples_to_process.rds"
+    array_type: "450K"
+
+# ----------------------------
+# WORKFLOW CONTROL
+# ----------------------------
+workflow:
+  run_preprocessing: true         # Runs champ_preprocessing_* for each dataset
+  run_reference_creation: true    # Combine beta values into reference values
+
+# ----------------------------
+# Top-level working directory
+# All outputs will be organized as subfolders in results folder
+# ----------------------------
+paths:
+  workdir: "/home/ceitec/epigenetic_ageing_clocks"

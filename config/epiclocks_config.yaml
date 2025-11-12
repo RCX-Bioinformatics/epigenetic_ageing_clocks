@@ -1,0 +1,17 @@
+# =========================================
+# CONFIG FOR EPICLOCKS
+# =========================================
+
+# List of input datasets. Each will be processed separately.
+dataset:
+  name: "HBA"
+  idat_dir: "/home/ceitec/Anna/HBA/RAW_DATA/IDATs"   # "/path/to/idats"
+gold_standard_BMIQ: "/home/ceitec/epigenetic_ageing_clocks/GS_results/ref_vals_buccal_GSE166844_GSE48472_GSE50586_BMIQ.rds"
+gold_standard_raw: "/home/ceitec/epigenetic_ageing_clocks/GS_results/ref_vals_buccal_GSE166844_GSE48472_GSE50586.rds"
+
+# ----------------------------
+# Top-level working directory
+# All outputs will be organized as subfolders in results folder
+# ----------------------------
+paths:
+  workdir: "/home/ceitec/epigenetic_ageing_clocks"

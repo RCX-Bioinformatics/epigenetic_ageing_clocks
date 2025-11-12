@@ -1,0 +1,53 @@
+# Stage 1: Base Stage
+Bootstrap: localimage
+From: ../ubuntu22.04_R4.4.1/ubuntu22.04_R4.4.1.sif
+Stage: final
+
+%help
+    This stage installs additional R packages on top of the base image.
+
+%files
+    ./13059_2013_3156_MOESM21_ESM.csv /opt/13059_2013_3156_MOESM21_ESM.csv
+    ./13059_2013_3156_MOESM22_ESM.csv /opt/13059_2013_3156_MOESM22_ESM.csv
+    ./13059_2013_3156_MOESM23_ESM.csv /opt/13059_2013_3156_MOESM23_ESM.csv
+    ./13059_2013_3156_MOESM24_ESM.txt /opt/13059_2013_3156_MOESM24_ESM.txt
+
+%post
+    # Set environment variables for locale
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+
+    # Install necessary dependencies
+    apt-get update && apt-get install -y \
+        liblapack3 \
+        libcurl4-openssl-dev \
+        libxml2-dev \
+        libssl-dev \
+        libgsl-dev \
+        liblapack-dev \
+        libhdf5-dev \
+        libharfbuzz-dev \
+        libfribidi-dev \
+        libsqlite3-dev \
+        gfortran \
+        libz-dev \
+        libxt-dev
+
+    Rscript -e 'options(repos="https://cloud.r-project.org")'
+    # Install R packages with specified versions
+    Rscript -e 'if (!requireNamespace("BiocManager", quietly=TRUE)) install.packages("BiocManager", repos="https://cloud.r-project.org")'
+    Rscript -e 'BiocManager::install(version="3.20", ask=FALSE)'
+    Rscript -e 'BiocManager::install("WGCNA", ask=FALSE, force=TRUE)'
+    Rscript -e 'install.packages("remotes", repos="https://cloud.r-project.org")'
+    Rscript -e 'remotes::install_version("dplyr", version = "{{DPLYR_VERSION}}", repos="https://cloud.r-project.org")'
+    Rscript -e 'remotes::install_version("sqldf", version = "{{SQLDF_VERSION}}", repos="https://cloud.r-project.org")'
+    Rscript -e 'remotes::install_version("RPMM", version = "{{RPMM_VERSION}}", repos="https://cloud.r-project.org")'
+
+%environment
+    export R_HOME=/usr/local/lib/R
+    export PATH=$R_HOME/bin:$PATH
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+
+%runscript
+    exec R "$@"
