@@ -1,10 +1,17 @@
 # 🧬 Epigenetic Ageing Clock Pipeline
 
-This pipeline estimates multiple **epigenetic ageing clocks** from DNA methylation data.  
+This pipeline estimates multiple **epigenetic ageing clocks** from DNA methylation data:
+
+- **DNAmAge (Horvath clock)** Horvath S. (2013). DNA methylation age of human tissues and cell types. Genome Biology.
+- **AltumAge** Lee Y. et al. (2022). AltumAge: A Pan-Tissue DNA Methylation Epigenetic Clock. Frontiers in Aging.
+- **CheekAge** Shokhirev M. N. et al. (2024). CheekAge: a next-generation buccal epigenetic aging clock associated with lifestyle and health. GeroScience.
+
+All scripts run inside prebuilt **Singularity containers**, ensuring a reproducible environment without manual package installation.
+
 It consists of two main parts:
 
 1. **Gold Standard (GS) dataset generation** — creates a comprehensive reference methylation dataset covering all probes required by various epigenetic ageing clocks.
-2. **Epigenetic clocks estimation** — processes a new dataset, completes missing probes using the GS reference, and estimates multiple ageing clocks.
+2. **Epigenetic clocks estimation** — processes a new dataset, completes missing probes using the GS reference, and estimates multiple epigenetic ageing clocks.
 
 ---
 
@@ -17,19 +24,8 @@ epigenetic_ageing_clocks/
 │   └── epiclocks_config.yaml
 ├── scripts/
 │   ├── gold_standard/
-│   │   ├── champ_preprocessing_GS_idats.R
-│   │   ├── champ_preprocessing_GS_signal_intensities.R
-│   │   └── gs_ref_vals.R
 │   └── epiclocks/
-│       ├── champ_preprocessing.R
-│       ├── ref_vals_completion.R
-│       ├── cheekage_input_prep.R
-│       ├── horvath_dnamage.R
-│       └── pyaging_clocks.py
 ├── singularity/
-│   ├── champ/champ.def
-│   ├── horvath/horvath.def
-│   └── pyaging/pyaging.def
 └── run_gold_standard.sh
 └── run_epiclocks.sh
 ```
@@ -41,6 +37,7 @@ epigenetic_ageing_clocks/
 - **Linux environment** with:
   - `bash`, `yq`, `make`, and `singularity` installed
 - **Required Singularity images** (can be built using `make`):
+  - `ubuntu22.04_R4.4.1.sif` → base environment
   - `champ.sif` → ChAMP-based preprocessing
   - `horvath.sif` → Horvath’s DNAmAge estimation
   - `pyaging.sif` → PyAging-based deep learning clocks
@@ -51,13 +48,33 @@ Make sure these Singularity images are correctly defined in the config YAML file
 
 ### 🔧 Build Singularity Images
 
-If not yet built, navigate to the `singularity/ubuntu22.04_R4.4.1` directory and run:
+A single Makefile is provided in the `singularity/` folder to build all containers in the correct order.
+
+1. Navigate to the `singularity/` folder:
 
 ```bash
-make
+cd singularity/
 ```
-
-This will build `.sif` container using the `Makefile`. Please build all necessary containers following the same instructions.
+2. Build all containers:
+```bash
+make all
+```
+Tip: If you encounter permission denied errors, rerun with sudo
+```bash
+sudo make all
+```
+3. To build individual containers, you can run:
+```bash
+make ubuntu22.04_R4.4.1   # Build only the base container (must be created first)
+make champ                 # Build only the champ container
+make pyaging               # Build only the pyaging container
+make horvath               # Build only the horvath container
+make minfi                 # Build only the minfi container
+```
+4.To clean all built `.sif` images:
+```bash
+make clean
+```
 
 ---
 
@@ -94,6 +111,7 @@ Each dataset can be provided as:
 
 ### Run
 
+
 ```bash
 bash run_gold_standard.sh
 ```
@@ -107,7 +125,7 @@ This script will:
 ```
 $WORKDIR/GS_results/
 ├── GS_preprocessing/         # Individual dataset preprocessing outputs
-└── buccal_ref_values/        # Final combined reference matrices
+└── ref_vals_*.rds            # Final combined reference matrices
 ```
 
 Each dataset is processed only once (a `.done` file prevents re-processing).
@@ -143,7 +161,7 @@ bash run_epiclocks.sh
 This will:
 
 1. **Preprocess** the input dataset using ChAMP  
-   → Outputs `beta_values_RAW.rds` and `beta_values_BMIQ.rds`
+   → Outputs `beta_values_*.rds` and `beta_values_*_BMIQ.rds`
 2. **Complete missing probes** using the GS reference (`ref_vals_completion.R`)
 3. **Compute ageing clock estimates**:
    - **CheekAge** (via Shiny server input prep)
@@ -166,9 +184,8 @@ $WORKDIR/EPICLOCKS_results/MyDataset/
 ## 🧹 Tips
 
 - If a dataset has already been processed, delete its `.done` file to re-run that step.
-- If you have already processed methylation data and want to create a GS reference directly, set the `run_preprocessing` argument to `false` in the YAML configuration file.
-- Intermediate files from `AVAILABLE_BETA` are cleaned automatically.
-- Temporary cache from PyAging is removed at the end of each run.
+- If you have already processed methylation data and want to create GS reference directly, set the `run_preprocessing` argument to `false` in the YAML configuration file.
+- Intermediate files and temporary cache are cleaned automatically at the end of each run.
 - Make sure that `workdir` in YAML configuration file matches the actual repository path.
 
 ---
