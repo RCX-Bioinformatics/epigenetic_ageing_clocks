@@ -6,14 +6,14 @@
 # rerun with sudo:
 #   sudo make all
 
-CONTAINERS := ubuntu22.04_R4.4.1 champ pyaging horvath minfi
+CONTAINERS := ubuntu22.04_R4.4.1 champ pyaging horvath
 
 .PHONY: all clean help $(CONTAINERS)
 
 # -----------------------------
 # Default: build all
 # -----------------------------
-all: ubuntu22.04_R4.4.1 champ pyaging horvath minfi
+all: ubuntu22.04_R4.4.1 champ pyaging horvath
 
 # -----------------------------
 # Build each container
@@ -41,12 +41,6 @@ horvath:
 	@echo " Building container: horvath"
 	@echo "==============================================="
 	$(MAKE) -C horvath
-
-minfi:
-	@echo "==============================================="
-	@echo " Building container: minfi"
-	@echo "==============================================="
-	$(MAKE) -C minfi
 
 # -----------------------------
 # Clean all containers
