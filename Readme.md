@@ -178,10 +178,8 @@ This will:
 
 2. **Complete missing probes** using the GS reference (`ref_vals_completion.R`). This step creates the following files inside the `complete_betas` folder:
   - Complete beta-values
-    - `beta_values_*_BMIQ.rds`
-    - `beta_values_*_BMIQ.csv`
-    - `beta_values_*.rds`
-    - `beta_values_*.csv`
+    - `beta_values_*_BMIQ.rds` and `beta_values_*_BMIQ.csv`
+    - `beta_values_*.rds` and `beta_values_*.csv`
   - Summary of missing probes per each epigenetic ageing clock
     - `epiclock_probes_summary_*.log`
 
