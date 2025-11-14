@@ -6,7 +6,7 @@ set -o pipefail
 # -----------------------------
 # CONFIG
 # -----------------------------
-CONFIG="/home/ceitec/epigenetic_ageing_clocks/config/epiclocks_config.yaml"
+CONFIG="/$HOME/epigenetic_ageing_clocks/config/epiclocks_config.yaml"
 
 WORKDIR=$(yq e '.paths.workdir' "$CONFIG")
 CHAMP_SING_IMAGE="$WORKDIR/singularity/champ/champ.sif"

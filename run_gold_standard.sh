@@ -6,7 +6,7 @@ set -o pipefail
 # -----------------------------
 # CONFIG
 # -----------------------------
-CONFIG="/home/ceitec/epigenetic_ageing_clocks/config/gold_standard_config.yaml"
+CONFIG="/$HOME/epigenetic_ageing_clocks/config/gold_standard_config.yaml"
 
 # Read top-level workdir from YAML
 WORKDIR=$(yq e '.paths.workdir' "$CONFIG")

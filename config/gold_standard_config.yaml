@@ -5,24 +5,24 @@
 
 # List of input datasets. Each will be processed separately.
 datasets:
-  - name: "GSE48472"
+  - name: "REF1"                      # name of dataset
     input_type: "idat"                # options: "idat" or "signal_intensity"
-    idat_dir: "~/Anna/epiclock/GS_datasets_test/GSE48472/buccal"   # "/path/to/idats/GSE48472"
-    signal_file: null                 # unused here
-    array_type: "450K"
+    idat_dir: "/path/to/idats/REF1"   # absolute path to IDAT files
+    signal_file: null                 # use this only if you have singal intensities (set as null if you have IDAT)
+    array_type: "450K"                # 450K or EPIC
 
-  - name: "GSE166844"
+  - name: "REF2"
     input_type: "signal_intensity"
-    idat_dir: null
-    signal_file: "~/Anna/epiclock/GS_datasets_test/GSE166844/GSE166844_Variance_raw_Signal.csv.gz"   # "/path/to/signal.csv.gz"   # path to signal intensities in csv.gz or txt.gz format
-    samples_to_process: "~/Anna/epiclock/GS_datasets_test/GSE166844/GSE166844_samples_to_process.rds"   # optional RDS file for signal intensity input
+    idat_dir: null                    # use this only if you have IDAT input (set as null if you have singal intensities)
+    signal_file: "/path/to/signal_intensities.csv.gz"       # path to signal intensities in csv.gz or txt.gz format
+    samples_to_process: "/path/to/samples_to_process.rds"   # optional RDS file (vector of set of samples to be processed)
     array_type: "EPIC"
 
-  - name: "GSE50586"
+  - name: "REF3"
     input_type: "signal_intensity"
     idat_dir: null
-    signal_file: "~/Anna/epiclock/GS_datasets_test/GSE50586/GSE50586_signal_intensities.txt.gz"   # "/path/to/signal.txt.gz"
-    samples_to_process: "~/Anna/epiclock/GS_datasets_test/GSE50586/GSE50586_samples_to_process.rds"
+    signal_file: "/path/to/signal_intensities.txt.gz"
+    samples_to_process: "/path/to/samples_to_process.rds"
     array_type: "450K"
 
 # ----------------------------
@@ -37,4 +37,4 @@ workflow:
 # All outputs will be organized as subfolders in results folder
 # ----------------------------
 paths:
-  workdir: "/home/ceitec/epigenetic_ageing_clocks"
+  workdir: "/$HOME/epigenetic_ageing_clocks"
