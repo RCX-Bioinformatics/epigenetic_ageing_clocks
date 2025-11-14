@@ -80,7 +80,7 @@ make clean
 
 ## 🧩 Step 1: Create Gold Standard (GS) Reference Dataset
 
-This step preprocesses multiple methylation datasets and merges them to create **reference beta value matrices** that cover all probes needed by downstream ageing clocks.
+This step preprocesses multiple methylation datasets and merges them to create **reference beta value matrix** that cover all probes needed by downstream epigenetic ageing clocks.
 
 ### Configuration
 
@@ -125,7 +125,7 @@ This script will:
 ```
 $WORKDIR/GS_results/
 ├── GS_preprocessing/         # Individual dataset preprocessing outputs
-└── ref_vals_*.rds            # Final combined reference matrices
+└── ref_vals_*.rds            # Final combined reference matrix
 ```
 
 Each dataset is processed only once (a `.done` file prevents re-processing).
@@ -134,7 +134,7 @@ Each dataset is processed only once (a `.done` file prevents re-processing).
 
 ## 🧠 Step 2: Estimate Epigenetic Ageing Clocks
 
-Once GS reference datasets are ready, use them to estimate clocks for a new dataset.
+Once GS reference dataset is ready, use them to estimate clocks for a new dataset.
 
 ### Configuration
 
@@ -161,39 +161,39 @@ bash run_epiclocks.sh
 This will:
 
 1. **Preprocess** the input dataset using ChAMP (`champ_preprocessing.R`). This step creates the following files inside the `preprocessing` folder:
-  - **Beta-values**
+  - Beta-values
     - `beta_values_*.rds`
     - `beta_values_*_BMIQ.rds` and `beta_values_*_BMIQ.csv`
-  - **M-values**
+  - M-values
     - `M_values_*_BMIQ.rds`
-  - **Metadata**
+  - Metadata
     - `champ_metadata_*.rds`
-  - **Cell type estimates**
+  - Cell type estimates
     - `cell_proportions_epidish_*_BMIQ.rds`
     - `cell_proportions_hepidish_*_BMIQ.rds`
-  - **Quality control**
+  - Quality control
     - Raw vs normalised QC plots
     - BMIQ diagnostic plots
     - SVD plots (batch effect assessment)
 
 2. **Complete missing probes** using the GS reference (`ref_vals_completion.R`). This step creates the following files inside the `complete_betas` folder:
-  - **Complete beta-values**
+  - Complete beta-values
     - `beta_values_*_BMIQ.rds`
     - `beta_values_*_BMIQ.csv`
     - `beta_values_*.rds`
     - `beta_values_*.csv`
-  - **Summary of missing probes per each epigenetic ageing clock**
+  - Summary of missing probes per each epigenetic ageing clock
     - `epiclock_probes_summary_*.log`
 
 3. **Compute ageing clock estimates**:
   - **Prepare inputs for CheekAge Shiny server** (`cheekage_input_prep.R`). This step creates the following files inside the `cheekage` folder:
-    - **M-values divided into smaller chunks suitable for upload to the CheekAge Shiny server**
+    - M-values divided into smaller chunks suitable for upload to the CheekAge Shiny server
       - `M_vals_chunk_*.csv.gz`
   - **AltumAge estimate** (via PyAging) (`pyaging_clocks.py`). This step creates the following file inside the `altumage` folder:
-    - **AltumAge estimate**
+    - AltumAge estimate
       - `pyaging_estimate_MyDataset.csv`
   - **Horvath DNAmAge** using R script based on original publication from dr. Horvath (`horvath_dnamage.R`). This step creates the following file inside the `dnamage` folder:
-    - **DNAmAge estimate**
+    - DNAmAge estimate
       - `beta_values_MyDataset_*_DNAmAge.csv`
 
 Results are stored under:
