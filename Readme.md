@@ -236,5 +236,5 @@ If you use this pipeline, please cite the relevant methods and tools:
 - **Cell type heterogeneity estimate:** Zheng SC, Breeze CE, Beck S, Teschendorff AE (2018). “Identification of differentially methylated cell-types in Epigenome-Wide Association Studies.” Nature Methods, 15(12), 1059.
 - **DNAmAge:** Horvath S. (2013). DNA methylation age of human tissues and cell types. Genome Biology.
 - **AltumAge:** Lee Y. et al. (2022). AltumAge: A Pan-Tissue DNA Methylation Epigenetic Clock. Frontiers in Aging.
-- **PyAging / AltumAge:** de Lima Camillo et al., *bioRxiv*, 2023
+- **PyAging / AltumAge:** de Lima Camillo L.P., pyaging: a Python-based compendium of GPU-optimized aging clocks. Bioinformatics. 2024
 - **CheekAge** Shokhirev M. N. et al. (2024). CheekAge: a next-generation buccal epigenetic aging clock associated with lifestyle and health. GeroScience.
