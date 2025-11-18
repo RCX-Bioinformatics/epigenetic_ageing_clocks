@@ -69,7 +69,6 @@ make ubuntu22.04_R4.4.1   # Build only the base container (must be created first
 make champ                 # Build only the champ container
 make pyaging               # Build only the pyaging container
 make horvath               # Build only the horvath container
-make minfi                 # Build only the minfi container
 ```
 4.To clean all built `.sif` images:
 ```bash
