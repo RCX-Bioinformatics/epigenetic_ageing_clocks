@@ -1,0 +1,17 @@
+# =========================================
+# CONFIG FOR EPICLOCKS
+# =========================================
+
+# List of input datasets. Each will be processed separately.
+dataset:
+  name: "MyDataset"               # name of dataset
+  idat_dir: "/path/to/idats"      # absolute path to IDAT files
+gold_standard_BMIQ: "/$HOME/epigenetic_ageing_clocks/GS_results/ref_vals_buccal_REF1_REF2_REF3_BMIQ.rds"  # created by run_gold_standard.sh
+gold_standard_raw: "/$HOME/epigenetic_ageing_clocks/GS_results/ref_vals_buccal_REF1_REF2_REF3.rds"        # created by run_gold_standard.sh
+
+# ----------------------------
+# Top-level working directory
+# All outputs will be organized as subfolders in results folder
+# ----------------------------
+paths:
+  workdir: "/$HOME/epigenetic_ageing_clocks"

@@ -1,0 +1,33 @@
+Bootstrap: docker
+From: python:{{PYTHON_VERSION}}
+
+%post
+    apt-get update && apt-get install -y \
+        build-essential \
+        git \
+        wget \
+        libhdf5-dev \
+        libssl-dev \
+        libcurl4-openssl-dev \
+        libxml2-dev  \
+        python3-venv && \
+    rm -rf /var/lib/apt/lists/*
+    
+    # Set up Python virtual environment
+    python3 -m venv /venv
+    . /venv/bin/activate
+
+    # Upgrade pip and install build tools
+    /venv/bin/pip install --upgrade pip==25.0.1
+
+    # Pyaging dependencies
+    /venv/bin/pip install requests=={{REQUESTS_VERSION}}
+
+    # Install pyaging with required epigenetic clocks
+    /venv/bin/pip install pyaging=={{PYAGING_VERSION}}
+
+%environment
+    export PATH=/venv/bin:$PATH
+
+%runscript
+    exec python3 "$@"

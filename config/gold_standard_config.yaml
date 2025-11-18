@@ -1,0 +1,40 @@
+# =========================================
+# CONFIG FOR MULTI-DATASET GOLD STANDARD 
+# Supports: IDATs, signal intensities, and beta files
+# =========================================
+
+# List of input datasets. Each will be processed separately.
+datasets:
+  - name: "REF1"                      # name of dataset
+    input_type: "idat"                # options: "idat" or "signal_intensity"
+    idat_dir: "/path/to/idats/REF1"   # absolute path to IDAT files
+    signal_file: null                 # use this only if you have singal intensities (set as null if you have IDAT)
+    array_type: "450K"                # 450K or EPIC
+
+  - name: "REF2"
+    input_type: "signal_intensity"
+    idat_dir: null                    # use this only if you have IDAT input (set as null if you have singal intensities)
+    signal_file: "/path/to/signal_intensities.csv.gz"       # path to signal intensities in csv.gz or txt.gz format
+    samples_to_process: "/path/to/samples_to_process.rds"   # optional RDS file (vector of set of samples to be processed)
+    array_type: "EPIC"
+
+  - name: "REF3"
+    input_type: "signal_intensity"
+    idat_dir: null
+    signal_file: "/path/to/signal_intensities.txt.gz"
+    samples_to_process: "/path/to/samples_to_process.rds"
+    array_type: "450K"
+
+# ----------------------------
+# WORKFLOW CONTROL
+# ----------------------------
+workflow:
+  run_preprocessing: true         # Runs champ_preprocessing_* for each dataset
+  run_reference_creation: true    # Combine beta values into reference values
+
+# ----------------------------
+# Top-level working directory
+# All outputs will be organized as subfolders in results folder
+# ----------------------------
+paths:
+  workdir: "/$HOME/epigenetic_ageing_clocks"
