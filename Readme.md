@@ -230,7 +230,7 @@ bash run_epiclocks.sh
 
 If you use this pipeline, please cite the relevant methods and tools:
 
-- Mareckova et al. (update once published)
+- Mareckova K, Mendes-Silva AP, Mareček R, et al. Functional Impact Score of Mitochondrial Variants and Its Relationship With Functional Connectivity of the Brain: Potential Origins of Premature Aging in Young Adulthood. Hum Brain Mapp. 2026 Jan;47(1):e70447. doi: 10.1002/hbm.70447.
 - **ChAMP:** Tian Y, Morris TJ, Webster AP, et al. ChAMP: updated methylation analysis pipeline for Illumina BeadChips. Bioinformatics. 2017.  
 - **BMIQ normalization:** Teschendorff AE, et al. A beta-mixture quantile normalization method for correcting probe design bias in Illumina Infinium 450k DNA methylation data. Bioinformatics. 2013.  
 - **Cell type heterogeneity estimate:** Zheng SC, Breeze CE, Beck S, Teschendorff AE (2018). “Identification of differentially methylated cell-types in Epigenome-Wide Association Studies.” Nature Methods, 15(12), 1059.
