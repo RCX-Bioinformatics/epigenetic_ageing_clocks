@@ -161,11 +161,19 @@ echo "==================================="
 DNAMAGE_DIR=$DATASET_DIR/dnamage
 mkdir -p "$DNAMAGE_DIR"
 
-echo "Running horvath_dnamage.R for dataset '$name'..."
+DONE_DNAMAGE="$DNAMAGE_DIR/.done_DNAmAge"
+if [[ -f "$DONE_DNAMAGE" ]]; then
+    echo "DNAmAge estimate for dataset '$name' already computed. Skipping."
+else
+    echo "Running horvath_dnamage.R for dataset '$name'..."
 
-singularity exec "$HORVATH_SING_IMAGE" Rscript "$WORKDIR/scripts/epiclocks/horvath_dnamage.R" \
-    beta_vals="$BETA_VALS_RAW" \
-    output_dir="$DNAMAGE_DIR"
+    singularity exec "$HORVATH_SING_IMAGE" Rscript "$WORKDIR/scripts/epiclocks/horvath_dnamage.R" \
+        beta_vals="$BETA_VALS_RAW" \
+        output_dir="$DNAMAGE_DIR"
+
+    touch "$DONE_DNAMAGE"
+    echo "DNAmAge estimate for dataset '$name' successfully computed."
+fi
 
 
 echo "==================================="
