@@ -5,6 +5,8 @@ This pipeline estimates multiple **epigenetic ageing clocks** from DNA methylati
 - **DNAmAge (Horvath clock)** Horvath S. (2013). DNA methylation age of human tissues and cell types. Genome Biology.
 - **AltumAge** Lee Y. et al. (2022). AltumAge: A Pan-Tissue DNA Methylation Epigenetic Clock. Frontiers in Aging.
 - **CheekAge** Shokhirev M. N. et al. (2024). CheekAge: a next-generation buccal epigenetic aging clock associated with lifestyle and health. GeroScience.
+- **GrimAge** Lu A.T. et al. (2019). DNA methylation GrimAge strongly predicts lifespan and healthspan. Aging.
+- **DunedinPACE** Belsky D.W. et al (2022). DunedinPACE, a DNA methylation biomarker of the pace of aging. Elife.
 
 All scripts run inside prebuilt **Singularity containers**, ensuring a reproducible environment without manual package installation.
 
@@ -41,6 +43,8 @@ epigenetic_ageing_clocks/
   - `champ.sif` → ChAMP-based preprocessing
   - `horvath.sif` → Horvath’s DNAmAge estimation
   - `pyaging.sif` → PyAging-based deep learning clocks
+  - `grimage.sif` → GrimAge estimation
+  - `dunedinpace.sif` → DunedinPACE estimation
 
 Make sure these Singularity images are correctly defined in the config YAML files.
 
@@ -65,10 +69,12 @@ sudo make all
 ```
 3. To build individual containers, you can run:
 ```bash
-make ubuntu22.04_R4.4.1   # Build only the base container (must be created first)
+make ubuntu22.04_R4.4.1    # Build only the base container (must be created first)
 make champ                 # Build only the champ container
 make pyaging               # Build only the pyaging container
 make horvath               # Build only the horvath container
+make grimage               # Build only the grimage container
+make dunedinpace           # Build only the dunedinpace container
 ```
 4.To clean all built `.sif` images:
 ```bash
@@ -192,6 +198,12 @@ This will:
   - **Horvath DNAmAge** using R script based on original publication from dr. Horvath (`horvath_dnamage.R`). This step creates the following file inside the `dnamage` folder:
     - DNAmAge estimate
       - `beta_values_MyDataset_*_DNAmAge.csv`
+  - **GrimAge estimate** (`grimage.R`). This step creates the following file inside the `grimage` folder:
+    - GrimAge estimate
+      - `MyDataset_GrimAge.csv`
+  - **DunedinPACE estimate** (`dunedinpace.R`). This step creates the following file inside the `dunedinpace` folder:
+    - DunedinPACE estimate
+      - `MyDataset_DunedinPACE.csv`
 
 Results are stored under:
 
@@ -201,6 +213,8 @@ $WORKDIR/EPICLOCKS_results/MyDataset/
 ├── complete_betas/
 ├── cheekage/
 ├── altumage/
+├── grimage/
+├── dunedinpace/
 └── dnamage/
 ```
 
@@ -230,11 +244,13 @@ bash run_epiclocks.sh
 
 If you use this pipeline, please cite the relevant methods and tools:
 
-- Mareckova et al. (update once published)
+- Mareckova K, Mendes-Silva AP, Mareček R, et al. Functional Impact Score of Mitochondrial Variants and Its Relationship With Functional Connectivity of the Brain: Potential Origins of Premature Aging in Young Adulthood. Hum Brain Mapp. 2026 Jan;47(1):e70447. doi: 10.1002/hbm.70447.
 - **ChAMP:** Tian Y, Morris TJ, Webster AP, et al. ChAMP: updated methylation analysis pipeline for Illumina BeadChips. Bioinformatics. 2017.  
 - **BMIQ normalization:** Teschendorff AE, et al. A beta-mixture quantile normalization method for correcting probe design bias in Illumina Infinium 450k DNA methylation data. Bioinformatics. 2013.  
 - **Cell type heterogeneity estimate:** Zheng SC, Breeze CE, Beck S, Teschendorff AE (2018). “Identification of differentially methylated cell-types in Epigenome-Wide Association Studies.” Nature Methods, 15(12), 1059.
 - **DNAmAge:** Horvath S. (2013). DNA methylation age of human tissues and cell types. Genome Biology.
 - **AltumAge:** Lee Y. et al. (2022). AltumAge: A Pan-Tissue DNA Methylation Epigenetic Clock. Frontiers in Aging.
-- **PyAging / AltumAge:** de Lima Camillo et al., *bioRxiv*, 2023
+- **PyAging / AltumAge:** de Lima Camillo L.P., pyaging: a Python-based compendium of GPU-optimized aging clocks. Bioinformatics. 2024
 - **CheekAge** Shokhirev M. N. et al. (2024). CheekAge: a next-generation buccal epigenetic aging clock associated with lifestyle and health. GeroScience.
+- **GrimAge:** Lu A.T. et al. (2019). DNA methylation GrimAge strongly predicts lifespan and healthspan. Aging.
+- **DunedinPACE** Belsky D.W. et al (2022). DunedinPACE, a DNA methylation biomarker of the pace of aging. Elife.
