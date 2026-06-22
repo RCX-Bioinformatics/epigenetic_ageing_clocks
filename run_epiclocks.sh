@@ -18,6 +18,7 @@ RESULTS_DIR="$WORKDIR/EPICLOCKS_results"
 
 name=$(yq e '.dataset.name' "$CONFIG")
 idat_dir=$(yq e '.dataset.idat_dir' "$CONFIG")
+pheno_csv=$(yq e '.dataset.pheno_csv' "$CONFIG")
 DATASET_DIR="$RESULTS_DIR/$name"
 mkdir -p "$DATASET_DIR"
 PREPROCESS_DIR="$DATASET_DIR/preprocessing"
@@ -182,7 +183,7 @@ else
 
     singularity exec "$GRIMAGE_SING_IMAGE" Rscript "$WORKDIR/scripts/epiclocks/grimage.R" \
     beta_vals="$BETA_VALS_BMIQ" \
-    pheno_data="$PREPROCESS_DIR/pheno_data.csv" \
+    pheno_data="$pheno_csv" \
     dataset_name="$name" \
     output_dir="$GRIMAGE_DIR"
 

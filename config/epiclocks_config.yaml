@@ -6,6 +6,7 @@
 dataset:
   name: "MyDataset"               # name of dataset
   idat_dir: "/path/to/idats"      # absolute path to IDAT files
+  pheno_csv: "/path/to/pheno.csv"       # optional path to phenotype csv file (must have "SampleID" column matching IDAT sample names, "Age", and "Female" column (1=female, 0=male))
 gold_standard_BMIQ: "/$HOME/epigenetic_ageing_clocks/GS_results/ref_vals_buccal_REF1_REF2_REF3_BMIQ.rds"  # created by run_gold_standard.sh
 gold_standard_raw: "/$HOME/epigenetic_ageing_clocks/GS_results/ref_vals_buccal_REF1_REF2_REF3.rds"        # created by run_gold_standard.sh
 
