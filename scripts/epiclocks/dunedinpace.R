@@ -25,6 +25,7 @@ res <- PACEProjector(datMeth)
 DunedinPACE <- as.data.frame(res$DunedinPACE)
 
 # Ensure top-level output_dir exists and set working directory
+output_dir <- ifelse(!is.null(parsed_args$output_dir), parsed_args$output_dir, getwd())
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 setwd(output_dir)
 

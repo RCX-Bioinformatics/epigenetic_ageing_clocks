@@ -44,6 +44,7 @@ cat("Calculating GrimAge...\n")
 grimage_res <- calcGrimAgeV1(datMeth, pheno)
 
 # Ensure top-level output_dir exists and set working directory
+output_dir <- ifelse(!is.null(parsed_args$output_dir), parsed_args$output_dir, getwd())
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 setwd(output_dir)
 
