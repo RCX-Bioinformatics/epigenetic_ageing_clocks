@@ -23,14 +23,6 @@ cat("  pheno_data: Provide the full path to a CSV file containing phenotype data
 cat("  dataset_name: Name of the processed dataset, will be part of output filenames.\n\n")
 cat("  output_dir: Directory where the output files will be saved.\n\n")
 
-# Check BMIQ suffix consistency
-parsed_beta_name <- sub("\\.rds$", "", basename(parsed_args$beta_vals))
-parsed_ref_name  <- sub("\\.rds$", "", basename(parsed_args$ref_vals))
-if (grepl("_BMIQ(_|$)", parsed_beta_name) !=
-    grepl("_BMIQ(_|$)", parsed_ref_name)) {
-  stop("Inconsistent BMIQ suffix: one of the input files has '_BMIQ' and the other does not.")
-}
-
 # Load beta values
 # row names (sample Identifiers) and column names (CpG identities)
 datMeth <- readRDS(as.character(parsed_args$beta_vals))
