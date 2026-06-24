@@ -46,8 +46,6 @@ epigenetic_ageing_clocks/
   - `grimage.sif` → GrimAge estimation
   - `dunedinpace.sif` → DunedinPACE estimation
 
-Make sure these Singularity images are correctly defined in the config YAML files.
-
 ---
 
 ### 🔧 Build Singularity Images
