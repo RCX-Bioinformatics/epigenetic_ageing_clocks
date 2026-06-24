@@ -150,7 +150,8 @@ paths:
 dataset:
   name: "MyDataset"
   idat_dir: "/path/to/idats/"
-
+  pheno_csv: "/path/to/pheno.csv"
+  
 gold_standard_BMIQ: "/path/to/epigenetic_ageing_clocks/GS_results/ref_vals_buccal_REF1_REF2_REF3_BMIQ.rds"
 gold_standard_raw: "/path/to/epigenetic_ageing_clocks/GS_results/ref_vals_buccal_REF1_REF2_REF3.rds"
 ```
