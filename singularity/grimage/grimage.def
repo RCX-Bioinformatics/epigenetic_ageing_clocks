@@ -1,0 +1,42 @@
+# Stage 1: Base Stage
+Bootstrap: localimage
+From: ../ubuntu22.04_R4.4.1/ubuntu22.04_R4.4.1.sif
+Stage: final
+
+%help
+    This stage installs additional R packages on top of the base image.
+
+%post
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+
+    apt-get update && apt-get install -y \
+        liblapack3 \
+        liblapack-dev \
+        libgsl-dev \
+        libhdf5-dev \
+        libharfbuzz-dev \
+        libfribidi-dev \
+        libxt-dev \
+        libcurl4-openssl-dev \
+        libssl-dev \
+        libxml2-dev \
+        git \
+        build-essential
+
+    Rscript -e 'options(repos="https://cloud.r-project.org")'
+    # Install remotes
+    Rscript -e 'install.packages("remotes", repos="https://cloud.r-project.org")'
+    # R packages without releases available
+    R -e "remotes::install_github('https://github.com/HigginsChenLab/methylCIPHER')"
+    Rscript -e 'install.packages("dplyr", repos="https://cloud.r-project.org")'
+
+
+%environment
+    export R_HOME=/usr/local/lib/R
+    export PATH=$R_HOME/bin:$PATH
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+
+%runscript
+    exec R "$@"

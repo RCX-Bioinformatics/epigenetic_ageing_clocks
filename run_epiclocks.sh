@@ -12,10 +12,13 @@ WORKDIR=$(yq e '.paths.workdir' "$CONFIG")
 CHAMP_SING_IMAGE="$WORKDIR/singularity/champ/champ.sif"
 HORVATH_SING_IMAGE="$WORKDIR/singularity/horvath/horvath.sif"
 PYAGING_SING_IMAGE="$WORKDIR/singularity/pyaging/pyaging.sif"
+GRIMAGE_SING_IMAGE="$WORKDIR/singularity/grimage/grimage.sif"
+DUNEDINPACE_SING_IMAGE="$WORKDIR/singularity/dunedinpace/dunedinpace.sif"
 RESULTS_DIR="$WORKDIR/EPICLOCKS_results"
 
 name=$(yq e '.dataset.name' "$CONFIG")
 idat_dir=$(yq e '.dataset.idat_dir' "$CONFIG")
+pheno_csv=$(yq e '.dataset.pheno_csv' "$CONFIG")
 DATASET_DIR="$RESULTS_DIR/$name"
 mkdir -p "$DATASET_DIR"
 PREPROCESS_DIR="$DATASET_DIR/preprocessing"
@@ -158,8 +161,63 @@ echo "==================================="
 DNAMAGE_DIR=$DATASET_DIR/dnamage
 mkdir -p "$DNAMAGE_DIR"
 
-echo "Running horvath_dnamage.R for dataset '$name'..."
+DONE_DNAMAGE="$DNAMAGE_DIR/.done_DNAmAge"
+if [[ -f "$DONE_DNAMAGE" ]]; then
+    echo "DNAmAge estimate for dataset '$name' already computed. Skipping."
+else
+    echo "Running horvath_dnamage.R for dataset '$name'..."
 
-singularity exec "$HORVATH_SING_IMAGE" Rscript "$WORKDIR/scripts/epiclocks/horvath_dnamage.R" \
-    beta_vals="$BETA_VALS_RAW" \
-    output_dir="$DNAMAGE_DIR"
+    singularity exec "$HORVATH_SING_IMAGE" Rscript "$WORKDIR/scripts/epiclocks/horvath_dnamage.R" \
+        beta_vals="$BETA_VALS_RAW" \
+        output_dir="$DNAMAGE_DIR"
+
+    touch "$DONE_DNAMAGE"
+    echo "DNAmAge estimate for dataset '$name' successfully computed."
+fi
+
+
+echo "==================================="
+echo " Compute GrimAge estimate"
+echo "==================================="
+
+GRIMAGE_DIR=$DATASET_DIR/grimage
+mkdir -p "$GRIMAGE_DIR"
+
+DONE_GRIMAGE="$GRIMAGE_DIR/.done_GrimAge"
+if [[ -f "$DONE_GRIMAGE" ]]; then
+    echo "GrimAge estimate for dataset '$name' already computed. Skipping."
+else
+    echo "Running grimage.R for dataset '$name'..."
+
+    singularity exec "$GRIMAGE_SING_IMAGE" Rscript "$WORKDIR/scripts/epiclocks/grimage.R" \
+    beta_vals="$BETA_VALS_BMIQ" \
+    pheno_data="$pheno_csv" \
+    dataset_name="$name" \
+    output_dir="$GRIMAGE_DIR"
+
+    touch "$DONE_GRIMAGE"
+    echo "GrimAge estimate for dataset '$name' successfully computed."
+fi
+
+
+echo "==================================="
+echo " Compute DunedinPACE estimate"
+echo "==================================="
+
+DUNEDINPACE_DIR=$DATASET_DIR/dunedinpace
+mkdir -p "$DUNEDINPACE_DIR"
+
+DONE_DUNEDINPACE="$DUNEDINPACE_DIR/.done_DunedinPACE"
+if [[ -f "$DONE_DUNEDINPACE" ]]; then
+    echo "DunedinPACE estimate for dataset '$name' already computed. Skipping."
+else
+    echo "Running dunedinpace.R for dataset '$name'..."
+
+    singularity exec "$DUNEDINPACE_SING_IMAGE" Rscript "$WORKDIR/scripts/epiclocks/dunedinpace.R" \
+    beta_vals="$BETA_VALS_BMIQ" \
+    dataset_name="$name" \
+    output_dir="$DUNEDINPACE_DIR"
+
+    touch "$DONE_DUNEDINPACE"
+    echo "DunedinPACE estimate for dataset '$name' successfully computed."
+fi
