@@ -87,6 +87,7 @@ This step preprocesses multiple methylation datasets and merges them to create *
 
 ### Configuration
 
+The pipeline is configured through a YAML configuration file that is passed as an argument to `run_gold_standard.sh`.
 Edit `config/gold_standard_config.yaml` to define (details provided in the config file):
 
 ```yaml
@@ -116,7 +117,7 @@ Each dataset can be provided as:
 
 
 ```bash
-bash run_gold_standard.sh
+bash run_gold_standard.sh config/gold_standard_config.yaml
 ```
 
 This script will:
@@ -159,7 +160,7 @@ gold_standard_raw: "/path/to/epigenetic_ageing_clocks/GS_results/ref_vals_buccal
 ### Run
 
 ```bash
-bash run_epiclocks.sh
+bash run_epiclocks.sh config/epiclocks_config.yaml
 ```
 
 This will:
@@ -231,10 +232,10 @@ $WORKDIR/EPICLOCKS_results/MyDataset/
 
 ```bash
 # Step 1: Build reference GS dataset
-bash run_gold_standard.sh
+bash run_gold_standard.sh config/gold_standard_config.yaml
 
 # Step 2: Run clocks on new dataset
-bash run_epiclocks.sh
+bash run_epiclocks.sh config/epiclocks_config.yaml
 ```
 
 ---
