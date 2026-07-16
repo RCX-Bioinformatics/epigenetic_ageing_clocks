@@ -6,7 +6,13 @@ set -o pipefail
 # -----------------------------
 # CONFIG
 # -----------------------------
-CONFIG="/$HOME/epigenetic_ageing_clocks/config/gold_standard_config.yaml"
+CONFIG="$1"
+
+if [[ -z "$CONFIG" ]]; then
+    echo "Usage:"
+    echo "  $0 config.yaml"
+    exit 1
+fi
 
 # Read top-level workdir from YAML
 WORKDIR=$(yq e '.paths.workdir' "$CONFIG")
