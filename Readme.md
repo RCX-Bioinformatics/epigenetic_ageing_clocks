@@ -3,7 +3,7 @@
 This pipeline estimates multiple **epigenetic ageing clocks** from DNA methylation data:
 
 - **DNAmAge (Horvath clock)** Horvath S. (2013). DNA methylation age of human tissues and cell types. Genome Biology.
-- **AltumAge** Lee Y. et al. (2022). AltumAge: A Pan-Tissue DNA Methylation Epigenetic Clock. Frontiers in Aging.
+- **AltumAge** de Lima Camillo L.P. et al. (2022). A pan-tissue DNA-methylation epigenetic clock based on deep learning. npj Aging.
 - **CheekAge** Shokhirev M. N. et al. (2024). CheekAge: a next-generation buccal epigenetic aging clock associated with lifestyle and health. GeroScience.
 - **GrimAge** Lu A.T. et al. (2019). DNA methylation GrimAge strongly predicts lifespan and healthspan. Aging.
 - **DunedinPACE** Belsky D.W. et al (2022). DunedinPACE, a DNA methylation biomarker of the pace of aging. Elife.
